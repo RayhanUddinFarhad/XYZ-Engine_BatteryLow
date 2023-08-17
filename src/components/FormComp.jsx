@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Papa from 'papaparse';
+import { DataContext } from "../context/DataProvider";
+import { Link } from "react-router-dom";
 
 const FormComp = () => {
 
     const [array, setArray] = useState([]);
     const [fileUploaded, setFileUploaded] = useState(false);
 
-
+const {formData , setFormData} = useContext(DataContext)
 
 
     const fileReader = new FileReader();
@@ -32,7 +34,7 @@ const FormComp = () => {
         const projectDescription = form.projectDescription.value
         const client = form.client.value
         const Contactor = form.contactor.value
-        const csv = form.csv.value
+        const csv = array
         const maxvalueOfX = form.maxXResult.value
         const minValueOfX = form.minXResult.value
         const maxvalueOfY = form.maxYResult.value
@@ -40,7 +42,11 @@ const FormComp = () => {
         const maxValueOfZ = form.maxZResult.value
         const minValueOfZ = form.minZResult.value
 
-        console.log(name, projectDescription, client, Contactor, csv, maxvalueOfX, minValueOfX, maxvalueOfY, minValueOfY, maxValueOfZ, minValueOfZ);
+       
+
+        setFormData ({
+            name, projectDescription, client, Contactor, csv, maxvalueOfX, minValueOfX, maxvalueOfY, minValueOfY, maxValueOfZ, minValueOfZ
+        })
     }
 
 console.log(array);
@@ -336,10 +342,10 @@ console.log(array);
                         className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                     >
                         Submit                    </button>
-                    <button 
+                    <Link to= "/result"
                         className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                     >
-                        Show Result                    </button>
+                        Show Result                    </Link>
 
                 </form>
 
