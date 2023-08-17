@@ -1,105 +1,31 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import Pdf from "react-to-pdf";
+
+
+
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
-  const data = [
-    {
-      name: 'Page A',
-      uv: 590,
-      pv: 800,
-      amt: 1400,
-    },
-    {
-      name: 'Page B',
-      uv: 868,
-      pv: 967,
-      amt: 1506,
-    },
-    {
-      name: 'Page C',
-      uv: 1397,
-      pv: 1098,
-      amt: 989,
-    },
-    {
-      name: 'Page D',
-      uv: 1480,
-      pv: 1200,
-      amt: 1228,
-    },
-    {
-      name: 'Page E',
-      uv: 1520,
-      pv: 1108,
-      amt: 1100,
-    },
-    {
-      name: 'Page F',
-      uv: 1400,
-      pv: 680,
-      amt: 1700,
-    },
-  ];
+
+const ref = React.createRef();
+
+
+
 
 
 const Result = () => {
 
 
-    const tableItems = [
-        {
-            name: "Liam James",
-            email: "liamjames@example.com",
-            position: "Software engineer",
-            salary: "$100K"
-        },
-        {
-            name: "Olivia Emma",
-            email: "oliviaemma@example.com",
-            position: "Product designer",
-            salary: "$90K"
-        },
-        {
-            name: "William Benjamin",
-            email: "william.benjamin@example.com",
-            position: "Front-end developer",
-            salary: "$80K"
-        },
-        {
-            name: "Henry Theodore",
-            email: "henrytheodore@example.com",
-            position: "Laravel engineer",
-            salary: "$120K"
-        },
-        {
-            name: "Amelia Elijah",
-            email: "amelia.elijah@example.com",
-            position: "Open source manager",
-            salary: "$75K"
-        },
-    ]
+  
 
 
 const {formData} = useContext(DataContext)
 
 console.log(formData);
 
-const generatePdf = () => {
-    const input = document.getElementById('pdf-content'); // Element to be captured
-    html2canvas(input, { allowTaint: true, useCORS: true }).then((canvas) => {
-      const imgData = canvas.toDataURL('image/jpeg'); // Use JPEG format
 
-      const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait, millimeters, A4 size
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('code-example.pdf');
-    });
-  };
-
-  const chartData = formData?.csv || []; // Use formData.csv if available, otherwise an empty array
+  const chartData = formData?.csv || []; 
 
 
 
@@ -113,41 +39,14 @@ const generatePdf = () => {
 
 
 
-        <div id='pdf-content'>
-        <button onClick={generatePdf}>Generate pdf</button>
-
+        <div>
+        <Pdf  targetRef={ref} filename="code-example.pdf">
+        {({ toPdf }) => <button className='   px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150' onClick={toPdf}>Generate Pdf</button>}
+      </Pdf>
             
-        <div  className="max-w-screen-xl mx-auto px-4 md:px-8">
-           <div className="max-w-lg grid gap-5 lg:grid-cols-2">
-               <div className=' shadow-md p-3 rounded-lg'>
-                <p className='text-gray-400'>Project Name </p>
-                <h1 className='text-3xl font-bold text-green-500'>{formData?.name}</h1>
-
-
-
-               </div>
-               <div className=' shadow-md p-3 rounded-lg'>
-                <p className='text-gray-400'>Project Description </p>
-                <h1 className='text-3xl font-bold '>{formData?.projectDescription}</h1>
-
-
-
-               </div>
-               <div className=' shadow-md p-3 rounded-lg'>
-                <p className='text-gray-400'>Client : </p>
-                <h1 className='text-3xl font-bold text-green-500'>{formData?.client}</h1>
-
-
-
-               </div>
-               <div className=' shadow-md p-3 rounded-lg'>
-                <p className='text-gray-400'>Project Description </p>
-                <h1 className='text-3xl font-bold '>{formData?.Contactor}</h1>
-
-
-
-               </div>
-
+        <div id='pdf-content' ref={ref} className="w-full mx-auto px-4 md:px-8">
+           <div className="max-w-lg ">
+              
             </div>
 
             {chartData.length > 0 && ( // Render the chart only when there's data
@@ -179,32 +78,44 @@ const generatePdf = () => {
                 <table className="w-full table-auto text-sm text-left">
                     <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                         <tr className="divide-x">
-                            <th className="py-3 px-6">Kp</th>
-                            <th className="py-3 px-6">X</th>
-                            <th className="py-3 px-6">Y</th>
-                            <th className="py-3 px-6">Z</th>
+                            <th className="py-3 px-6">Project Name</th>
+                            <th className="py-3 px-6">Project Description</th>
+                            <th className="py-3 px-6">Client </th>
+                            <th className="py-3 px-6">Contractor</th>
+                            <th className="py-3 px-6">Max-X</th>
+                            <th className="py-3 px-6">Min-X</th>
+                            <th className="py-3 px-6">Max-Y</th>
+                            <th className="py-3 px-6">Min-Y</th>
+                            <th className="py-3 px-6">Max-Z</th>
+                            <th className="py-3 px-6">Min-Z</th>
+
                         </tr>
                     </thead>
-                    <tbody className="text-gray-600 divide-y">
-                        {
-                            formData?.csv?.map((item, idx) => (
+                    <tbody className="text-gray-600 divide-y ">
+                        
 
                                 
-                                <tr key={idx} className="divide-x">
+                                <tr  className="divide-x">
                                     <td className="px-6 py-4 whitespace-nowrap flex items-center gap-x-6">
-                                        <span>{idx + 1}</span>
-                                        {item.KP}
+                                        
+                                        {formData?.name}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{item.X}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{item.Y}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{item.Z}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.projectDescription}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.client}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.Contactor}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.maxvalueOfX}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.minValueOfX}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.maxvalueOfY}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.minValueOfY}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.maxValueOfZ}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{formData?.minValueOfZ}</td>
                                 </tr>
 
 
 
                                 
-                            ))
-                        }
+                          
+                        
                     </tbody>
                 </table>
             </div>
