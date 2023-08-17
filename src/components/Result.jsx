@@ -4,6 +4,8 @@ import Pdf from "react-to-pdf";
 
 
 
+
+
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
 
@@ -11,6 +13,7 @@ const ref = React.createRef();
 
 
 
+  
 
 
 const Result = () => {
@@ -28,7 +31,11 @@ console.log(formData);
   const chartData = formData?.csv || []; 
 
 
-
+  const options = {
+    orientation: 'landscape',
+    unit: 'in',
+    format: [15,20]
+};
 
     return (
 
@@ -40,18 +47,23 @@ console.log(formData);
 
 
         <div>
-        <Pdf  targetRef={ref} filename="code-example.pdf">
-        {({ toPdf }) => <button className='   px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150' onClick={toPdf}>Generate Pdf</button>}
+        <Pdf targetRef={ref} options = {options} filename="code-example.pdf" >
+        {({ toPdf }) => ( 
+          <button className='px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150' onClick={toPdf}>
+            Download Pdf
+          </button>
+        )}
       </Pdf>
             
         <div id='pdf-content' ref={ref} className="w-full mx-auto px-4 md:px-8">
-           <div className="max-w-lg ">
+           <div className="max-w-lg mx-auto">
+
+            <h1 className='text-3xl font-bold text-center'>Details of the uploaded product</h1>
               
             </div>
 
             {chartData.length > 0 && ( // Render the chart only when there's data
               <div style={{ width: '100%', height: 400 }}>
-              <h2 className="text-xl font-semibold mb-4">Chart: KP vs X</h2>
               <ResponsiveContainer width="100%" height="100%">
                   <LineChart
                       data={formData.csv}
@@ -119,7 +131,11 @@ console.log(formData);
                     </tbody>
                 </table>
             </div>
-        </div></div></>
+        </div></div>
+        
+        
+        
+        </>
     );
 };
 
