@@ -67,7 +67,7 @@ const FormComp = () => {
 
 
     return (
-        <main className="w-full h-screen flex flex-col items-center justify-center px-4">
+        <main className="w-full h-screen flex flex-col items-center justify-center px-4 mt-20">
             <div className="max-w-sm w-full text-gray-600">
                 <div className="text-center">
                     <div className="mt-5 space-y-2">
