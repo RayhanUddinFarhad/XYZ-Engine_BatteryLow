@@ -67,11 +67,11 @@ const FormComp = () => {
 
 
     return (
-        <main className="w-full h-screen flex flex-col items-center justify-center px-4 mt-20">
+        <main className="w-full h-screen flex flex-col items-center justify-center px-4 mt-32">
             <div className="max-w-sm w-full text-gray-600">
                 <div className="text-center">
                     <div className="mt-5 space-y-2">
-                        <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Input all field and then click on submit to see result with chart in another page.</h3>
+                        <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Please enter all the required information and then click the {`submit`} button to view the results along with a detailed chart on another page....</h3>
                     </div>
                 </div>
                 <form onSubmit={handleOnSubmit}
