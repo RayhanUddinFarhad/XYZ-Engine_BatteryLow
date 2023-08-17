@@ -45,12 +45,12 @@ const {formData , setFormData} = useContext(DataContext)
        
 
         setFormData ({
-            name, projectDescription, client, Contactor, csv, maxvalueOfX, minValueOfX, maxvalueOfY, minValueOfY, maxValueOfZ, minValueOfZ
+            name,  projectDescription, client, Contactor, csv, maxvalueOfX, minValueOfX, maxvalueOfY, minValueOfY, maxValueOfZ, minValueOfZ
         })
     }
 
-console.log(array);
 
+    console.log(formData);
     const maxXResult = array.reduce((acc, x) => acc = acc > parseFloat(x.X) ? acc : parseFloat(x.X), 0);
     const minXResult = array.reduce((acc, x) => acc = acc < parseFloat(x.X) ? acc : parseFloat(x.X), Infinity);   
     const maxYResult = array.reduce((acc, curr) => acc = acc > parseFloat(curr.Y) ? acc : parseFloat(curr.Y), 0);
@@ -342,10 +342,12 @@ console.log(array);
                         className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                     >
                         Submit                    </button>
-                    <Link to= "/result"
-                        className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+
+
+                   <button   className="w-full   px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"> <Link to= "/result"
+                       
                     >
-                        Show Result                    </Link>
+                        Show Result                    </Link></button>
 
                 </form>
 
